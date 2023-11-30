@@ -1,29 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-	[SerializeField] UiManager uiManager;
 	[SerializeField] CameraFollow cameraFollow;
 	[SerializeField] PlatformSpawner platformSpawner;
 
-	public static GameManager singleton;
+	public static GameManager instance;
 
 	private void Awake()
 	{
-		singleton = this;
+		instance = this;
 	}
 
-	public void OnPlayerFall()
+	public void GameOver()
 	{
+		UiManager.instance.GameOver();
 		cameraFollow.StopFollow();
 		platformSpawner.StopSpawning();
 	}
 
-	public void OnGameStart()
+	public void GameStart()
 	{
-		uiManager.HideStartText();
+		UiManager.instance.GameStart();
+		ScoreManager.instance.StartScore();
 		platformSpawner.StartSpawning();
+	}
+
+	public void OnReset()
+	{
+		// Load scene again
+		SceneManager.LoadScene(0);
+
+		UiManager.instance.OnReset();
 	}
 }

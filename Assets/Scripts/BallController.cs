@@ -34,7 +34,7 @@ public class BallController : MonoBehaviour
 			if (moveDirection == Vector3.zero)
 			{
 				// First movement
-				GameManager.singleton.OnGameStart();
+				GameManager.instance.GameStart();
 			}
 
 			SwitchDirection();
@@ -81,7 +81,7 @@ public class BallController : MonoBehaviour
 		if (!grounded && wasGrounded)
 		{
 			// First frame of non-groundedness
-			GameManager.singleton.OnPlayerFall();
+			GameManager.instance.GameOver();
 		}
 	}
 
@@ -90,6 +90,7 @@ public class BallController : MonoBehaviour
 		if (other.CompareTag("Diamond"))
 		{
 			Destroy(other.gameObject);
+			ScoreManager.instance.IncrementScore();
 		}
 	}
 }
