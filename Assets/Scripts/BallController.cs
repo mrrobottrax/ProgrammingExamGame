@@ -8,7 +8,6 @@ public class BallController : MonoBehaviour
 	[SerializeField] float speed;
 	[SerializeField] float gravity = -10;
 	[SerializeField] LayerMask layerMask;
-	[SerializeField] CameraFollow cameraFollow;
 
 	Vector3 moveDirection = Vector3.zero;
 	Vector3 velocity = Vector3.zero;
@@ -32,6 +31,12 @@ public class BallController : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
+			if (moveDirection == Vector3.zero)
+			{
+				// First movement
+				GameManager.singleton.OnGameStart();
+			}
+
 			SwitchDirection();
 		}
 	}
@@ -76,7 +81,7 @@ public class BallController : MonoBehaviour
 		if (!grounded && wasGrounded)
 		{
 			// First frame of non-groundedness
-			cameraFollow.StopFollow();
+			GameManager.singleton.OnPlayerFall();
 		}
 	}
 }

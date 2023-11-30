@@ -9,11 +9,12 @@ public class Platform : MonoBehaviour
 	[SerializeField] Rigidbody rb;
 	[SerializeField] Vector3 angularVelocityRange;
 
-	WaitForSeconds fallTimer;
+	static WaitForSeconds fallTimer;
 
 	private void Awake()
 	{
-		fallTimer = new WaitForSeconds(fallDelay);
+		if (fallTimer == null)
+			fallTimer = new WaitForSeconds(fallDelay);
 	}
 
 	private void OnTriggerExit(Collider other)
