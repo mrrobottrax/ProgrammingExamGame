@@ -34,4 +34,9 @@ public class GameManager : MonoBehaviour
 
 		UiManager.instance.OnReset();
 	}
+
+	public void SpawnNewPlatform()
+	{
+		platformSpawner.TrySpawnPlatform();
+	}
 }

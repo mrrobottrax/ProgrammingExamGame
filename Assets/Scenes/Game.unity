@@ -955,6 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779f76ce74a7a894088926e274b4f907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useTimer: 0
   platformPrefab: {fileID: 4471474051545462446, guid: 5c8752f1017745f4ebfd984164425562, type: 3}
   diamondPrefab: {fileID: 284833869776838477, guid: 88143bbdc24e39d45b18b2e2e4c32c94, type: 3}
   platformSize: {x: 2, y: 1, z: 2}

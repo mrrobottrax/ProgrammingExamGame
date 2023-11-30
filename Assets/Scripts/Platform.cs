@@ -23,6 +23,8 @@ public class Platform : MonoBehaviour
 		{
 			StartCoroutine(FallTimer());
 			Destroy(gameObject, despawnDelay);
+
+			GameManager.instance.SpawnNewPlatform();
 		}
 	}
 

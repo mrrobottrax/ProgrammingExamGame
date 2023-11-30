@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlatformSpawner : MonoBehaviour
 {
+	[SerializeField] bool useTimer = true;
 	[SerializeField] GameObject platformPrefab;
 	[SerializeField] GameObject diamondPrefab;
 	[SerializeField] Vector3 platformSize;
@@ -15,19 +16,26 @@ public class PlatformSpawner : MonoBehaviour
 
 	Coroutine spawnRoutine;
 
+	const int startPlatformCount = 50; // I know it's supposed to be 20, but I prefer 50
 	private void Awake()
 	{
 		spawnTimer = new WaitForSeconds(spawnDelay);
 
 		nextPlatformPosition = transform.position;
 
-		for (float i = 0; i < 20; ++i)
+		for (float i = 0; i < startPlatformCount; ++i)
 		{
-			SpawnPlatform();
+			SpawnPlatformInternal();
 		}
 	}
 
-	void SpawnPlatform()
+	public void TrySpawnPlatform()
+	{
+		if (!useTimer)
+			SpawnPlatformInternal();
+	}
+
+	void SpawnPlatformInternal()
 	{
 		GameObject platform = Instantiate(platformPrefab, nextPlatformPosition, Quaternion.identity);
 		bool spawnX = Random.value > 0.5;
@@ -55,19 +63,21 @@ public class PlatformSpawner : MonoBehaviour
 
 	public void StartSpawning()
 	{
-		spawnRoutine = StartCoroutine(SpawnLoop());
+		if (useTimer)
+			spawnRoutine = StartCoroutine(SpawnLoop());
 	}
 
 	public void StopSpawning()
 	{
-		StopCoroutine(spawnRoutine);
+		if (useTimer)
+			StopCoroutine(spawnRoutine);
 	}
 
 	IEnumerator SpawnLoop()
 	{
 		yield return spawnTimer;
 
-		SpawnPlatform();
+		SpawnPlatformInternal();
 
 		spawnRoutine = StartCoroutine(SpawnLoop());
 	}
