@@ -4,8 +4,10 @@ using UnityEngine;
 public class PlatformSpawner : MonoBehaviour
 {
 	[SerializeField] GameObject platformPrefab;
+	[SerializeField] GameObject diamondPrefab;
 	[SerializeField] Vector3 platformSize;
 	[SerializeField] float spawnDelay = 0.2f;
+	[SerializeField] float diamondChance = 0.5f;
 
 	Vector3 nextPlatformPosition;
 
@@ -29,7 +31,23 @@ public class PlatformSpawner : MonoBehaviour
 	{
 		Instantiate(platformPrefab, nextPlatformPosition, Quaternion.identity);
 		bool spawnX = Random.value > 0.5;
+
+		if (Random.value < diamondChance)
+		{
+			SpawnDiamond();
+		}
+
 		nextPlatformPosition += spawnX ? Vector3.right * platformSize.x : Vector3.forward * platformSize.z;
+	}
+
+	void SpawnDiamond()
+	{
+		Vector3 position = nextPlatformPosition + new Vector3(
+			Random.Range(-platformSize.x / 2, platformSize.x / 2),
+			0,
+			Random.Range(-platformSize.z / 2, platformSize.z / 2)
+		);
+		Instantiate(diamondPrefab, position, Quaternion.identity);
 	}
 
 	public void StartSpawning()
