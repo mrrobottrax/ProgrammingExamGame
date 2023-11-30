@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+	[SerializeField] UiManager uiManager;
 	[SerializeField] CameraFollow cameraFollow;
 	[SerializeField] PlatformSpawner platformSpawner;
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 
 	public void OnGameStart()
 	{
+		uiManager.HideStartText();
 		platformSpawner.StartSpawning();
 	}
 }
