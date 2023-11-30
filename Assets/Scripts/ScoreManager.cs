@@ -20,6 +20,7 @@ public class ScoreManager : MonoBehaviour
 	public void IncrementScore()
 	{
 		++score;
+		UiManager.instance.UpdateInGameScore();
 	}
 
 	public int GetScore()
