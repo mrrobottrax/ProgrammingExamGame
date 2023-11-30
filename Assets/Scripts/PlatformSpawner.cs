@@ -29,25 +29,28 @@ public class PlatformSpawner : MonoBehaviour
 
 	void SpawnPlatform()
 	{
-		Instantiate(platformPrefab, nextPlatformPosition, Quaternion.identity);
+		GameObject platform = Instantiate(platformPrefab, nextPlatformPosition, Quaternion.identity);
 		bool spawnX = Random.value > 0.5;
 
 		if (Random.value < diamondChance)
 		{
-			SpawnDiamond();
+			SpawnDiamond(platform.transform);
 		}
 
 		nextPlatformPosition += spawnX ? Vector3.right * platformSize.x : Vector3.forward * platformSize.z;
 	}
 
-	void SpawnDiamond()
+	void SpawnDiamond(Transform parent)
 	{
 		Vector3 position = nextPlatformPosition + new Vector3(
 			Random.Range(-platformSize.x / 2, platformSize.x / 2),
 			0,
 			Random.Range(-platformSize.z / 2, platformSize.z / 2)
 		);
-		Instantiate(diamondPrefab, position, Quaternion.identity);
+
+		GameObject diamond = Instantiate(diamondPrefab, parent, true);
+
+		diamond.transform.position = position;
 	}
 
 	public void StartSpawning()
